@@ -39,12 +39,15 @@ function getRoutes(routes) {
 }
 
 function buildRoutes(routes) {
-    return _.map(routes, function(route) {
-        return {
-            path: route.route.path,
-            methods: _.keys(route.route.methods)
-        };
-    });
+    return _.reduce(routes, function(result, item) {
+        if (item.route) {
+            result.push({
+                path: item.route.path,
+                methods: _.keys(item.route.methods)
+            });
+        }
+        return result;
+    }, []);
 }
 
 module.exports = function(routes, callback, config) {
