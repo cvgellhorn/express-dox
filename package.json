@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/cvgellhorn/express-dox#readme",
   "dependencies": {
+    "ejs": "^2.5.1",
     "underscore": "^1.8.3"
   }
 }
