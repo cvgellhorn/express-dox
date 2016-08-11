@@ -50,7 +50,7 @@ function buildRoutes(routes) {
     }, []);
 }
 
-module.exports = function(routes, callback, config) {
+module.exports = function(routes, config, callback) {
     var options = _.extend({}, defaultConfig, config);
 
     if (!options.cache || !routesStore) {
