@@ -2,8 +2,12 @@ var ejs = require('ejs');
 var path = require('path');
 var _ = require('underscore');
 
-// Routes cache
+// Routes store
 var routesStore;
+var defaultConfig = {
+    title: 'Express API Documentation',
+    cache: true
+};
 
 function renderTemplate(routes, callback) {
     var tmpl = path.join(__dirname, './template.ejs');
@@ -41,9 +45,9 @@ function buildRoutes(routes) {
 }
 
 module.exports = function(routes, callback, options) {
-    options = options || { cache: true };
+    var opt = _.extend({}, defaultConfig, options);
 
-    if (!options.cache || !routesStore) {
+    if (!opt.cache || !routesStore) {
         routesStore = getRoutes(routes);
     }
 
