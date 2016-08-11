@@ -1,35 +1,32 @@
-var fs = require('fs');
+var ejs = require('ejs');
 var path = require('path');
 var _ = require('underscore');
 
-// Template and Routes cache
-var template;
+// Routes cache
 var routesStore;
 
-function renderTemplate(tmpl, routes, callback, options) {
-    if (!options.cache || !routesStore) {
-        routesStore = getRoutes(routes);
-    }
+function renderTemplate(routes, callback) {
+    var tmpl = path.join(__dirname, './template.ejs');
 
-    callback(tmpl({
-        routes: routesStore
-    }));
+    ejs.renderFile(tmpl, routes, {}, function(err, html) {
+        if (err) throw err;
+        callback(html);
+    });
 }
 
 function getRoutes(routes) {
-    if (routes._router) {
-        // Express app default router
-        console.log('-- is express app');
+    // Array of routers
+    if (_.isArray(routes)) {
+        return _.reduce(routes, function(result, item) {
+            return result.concat(buildRoutes(item.stack));
+        }, []);
+
+    // App default router
+    } else if (routes._router) {
         return buildRoutes(routes._router.stack);
-    } else if (_.isArray(routes)) {
-        // Express router array
-        console.log('-- is router array');
-        // _.each()
-        // return buildRoutes(routes);
     }
 
-    // Express single route
-    console.log('-- is single route');
+    // Single route
     return buildRoutes(routes.stack);
 }
 
@@ -45,14 +42,9 @@ function buildRoutes(routes) {
 module.exports = function(routes, callback, options) {
     options = options || { cache: true };
 
-    if (template) {
-        renderTemplate(template, routes, callback, options);
-    } else {
-        fs.readFile(path.join(__dirname, './template.ejs'), 'utf8', function(err, data) {
-            if (err) throw err;
-
-            template = _.template(data);
-            renderTemplate(template, routes, callback, options);
-        });
+    if (!options.cache || !routesStore) {
+        routesStore = getRoutes(routes);
     }
+
+    renderTemplate(routesStore, callback);
 };
