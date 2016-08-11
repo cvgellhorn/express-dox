@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>API Overview</title>
+
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+    <div class="api-docs-content">
+        <div class="container">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Express API Documentation</a>
+                    <form class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <input type="search" id="jetsSearch" class="form-control" placeholder="Search...">
+                        </div>
+                    </form>
+                </div>
+            </nav>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Path</th>
+                    <th>Methods</th>
+                </tr>
+                </thead>
+                <tbody id="jetsContent">
+                    <% routes.forEach(function(item) { %>
+                        <tr>
+                            <td><%= item.path %></td>
+                            <td class="text-uppercase"><%= item.methods.join(', ') %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Jets CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.11.0/jets.min.js"></script>
+    <script>
+        var jets = new Jets({
+            searchTag: '#jetsSearch',
+            contentTag: '#jetsContent'
+            // columns: [0] // Search by first column only
+        });
+    </script>
+</body>
+</html>
