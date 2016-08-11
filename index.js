@@ -7,8 +7,9 @@ var routesStore;
 
 function renderTemplate(routes, callback) {
     var tmpl = path.join(__dirname, './template.ejs');
+    var data = { routes: routes };
 
-    ejs.renderFile(tmpl, routes, {}, function(err, html) {
+    ejs.renderFile(tmpl, data, {}, function(err, html) {
         if (err) throw err;
         callback(html);
     });
