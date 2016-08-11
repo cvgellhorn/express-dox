@@ -9,9 +9,12 @@ var defaultConfig = {
     cache: true
 };
 
-function renderTemplate(routes, callback) {
+function renderTemplate(routes, callback, options) {
     var tmpl = path.join(__dirname, './template.ejs');
-    var data = { routes: routes };
+    var data = {
+        routes: routes,
+        title: options.title
+    };
 
     ejs.renderFile(tmpl, data, {}, function(err, html) {
         if (err) throw err;
@@ -44,12 +47,12 @@ function buildRoutes(routes) {
     });
 }
 
-module.exports = function(routes, callback, options) {
-    var opt = _.extend({}, defaultConfig, options);
+module.exports = function(routes, callback, config) {
+    var options = _.extend({}, defaultConfig, config);
 
-    if (!opt.cache || !routesStore) {
+    if (!options.cache || !routesStore) {
         routesStore = getRoutes(routes);
     }
 
-    renderTemplate(routesStore, callback);
+    renderTemplate(routesStore, callback, options);
 };
