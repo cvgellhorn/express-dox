@@ -21,7 +21,7 @@
             <span class="navbar-brand"><%= title %></span>
             <form class="navbar-form navbar-right">
                 <div class="form-group">
-                    <input type="search" id="jetsSearch" class="form-control" placeholder="Search...">
+                    <input type="search" id="jets-search" class="form-control" placeholder="Search...">
                 </div>
             </form>
         </div>
@@ -35,7 +35,7 @@
                 <th>Methods</th>
             </tr>
             </thead>
-            <tbody id="jetsContent">
+            <tbody id="jets-content">
                 <% if (routes.length > 0) { %>
                     <% routes.forEach(function(item) { %>
                         <tr>
@@ -56,8 +56,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.11.0/jets.min.js"></script>
     <script>
         var jets = new Jets({
-            searchTag: '#jetsSearch',
-            contentTag: '#jetsContent'
+            searchTag: '#jets-search',
+            contentTag: '#jets-content'
         });
     </script>
 </body>
