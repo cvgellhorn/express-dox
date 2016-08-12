@@ -39,8 +39,8 @@
                 <% if (routes.length > 0) { %>
                     <% routes.forEach(function(item) { %>
                         <tr>
-                            <td><%= item.path %></td>
-                            <td class="text-uppercase"><%= item.methods.join(', ') %></td>
+                            <td class="col-md-6"><%= item.path %></td>
+                            <td class="col-md-6 text-uppercase"><%= item.methods.join(', ') %></td>
                         </tr>
                     <% }); %>
                 <% } else { %>
